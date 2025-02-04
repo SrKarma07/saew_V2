@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Calificaciones</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container content-wrapper">
+        <h1>Sistema de Calificaciones</h1>
+        <h3>Lista de Estudiantes</h3>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>ID Único</th>
+                    <th>ID RFID</th>
+                    <th>Correo</th>
+                    <th>Calificación</th>
+                </tr>
+            </thead>
+            <tbody id="students-table-body">
+                <!-- Datos cargados dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function fetchStudents() {
+            try {
+                const response = await fetch('http://localhost:3000/api/students');
+                if (!response.ok) throw new Error('Error en la respuesta de la API');
+
+                const students = await response.json();
+                console.log("📢 Datos obtenidos:", students); // Para depuración
+
+                const tableBody = document.getElementById('students-table-body');
+                tableBody.innerHTML = '';
+
+                students.forEach(student => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${student.nombre}</td>
+                        <td>${student.codigoUnico}</td>
+                        <td>${student.rfidId}</td>
+                        <td>${student.email}</td>
+                        <td>${student.calificacion}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('❌ Error al cargar los estudiantes:', error);
+                document.getElementById('students-table-body').innerHTML = `
+                    <tr><td colspan="4">Error al cargar los datos</td></tr>
+                `;
+            }
+        }
+
+        fetchStudents();
+    </script>
+</body>
+</html>

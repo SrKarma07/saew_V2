@@ -1,0 +1,16 @@
+[
+  {
+    "nombre": "David Averos",
+    "codigoUnico": "STU12345",
+    "rfidId": "123ABC456",
+    "email": "david.averos@example.com",
+    "calificacion": 85
+  },
+  {
+    "nombre": "Jeremy Torres",
+    "codigoUnico": "STU67890",
+    "rfidId": "123ABC123",
+    "email": "jeremy.torres@example.com",
+    "calificacion": 92
+  }
+]
